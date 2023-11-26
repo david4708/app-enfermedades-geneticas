@@ -29,73 +29,30 @@
 //1. importar express
 const express = require("express");
 
+const diseases = require("./genetic-diseases/genetic-diseases.route");
+const geneticSaludos = require("./genetic-diseases/genetic-middleware");
 //2. crearnos una constante app que tendra
 //todas las funcionalidades de express
 const app = express();
+
+const calculatequesTime = (req, res, next) => {
+  const requesTime = new Date().toISOString();
+  (req.requesTime = requesTime), next();
+};
+
 //midleware, para q el backend lea Json en el body
 app.use(express.json());
 
 //midleware, para q el backend lea url-encoded en el body
 app.use(express.urlencoded({ extended: true }));
+app.use(calculatequesTime);
+app.use(geneticSaludos.Saludo1, geneticSaludos.Saludo2);
 
-//definicion funciones
-//callback
-const findAll = (req, res) => {
-  return res.status(200).json({
-    message: "method get-findAll",
-  });
-};
-
-const create = (req, res) => {
-  const disease = req.body;
-
-  console.log(req.body);
-  return res.status(201).json({
-    message: "method post-create",
-    data: disease,
-  });
-};
-
-const findOne = (req, res) => {
-  console.log(req.params);
-  return res.status(200).json({
-    message: "method get-findone",
-    id: req.params.id,
-  });
-};
-
-const update = (req, res) => {
-  const { id } = req.params;
-  return res.status(200).json({
-    message: "method patch",
-    id,
-  });
-};
-
-const DELETE = (req, res) => {
-  const { id } = req.params;
-  return res.status(200).json({
-    message: "method delete",
-    id,
-  });
-};
-
-//3. definir el endpoint
-app.get("/api/v1/genetic-diseases", findAll);
-
-app.post("/api/v1/genetic-diseases", create);
-
-app.get("/api/v1/genetic-diseases/:id", findOne);
-
-app.patch("/api/v1/genetic-diseases/:id", update);
-
-app.delete("/api/v1/genetic-diseases/:id", DELETE);
+app.use("/api/v1", diseases);
 
 //4.poner a escuchar el servidor por un puerto
-app.listen(3000, () => {
-  console.log("Server running on port: " + 3000);
-});
 
 //servidor local -> direccion ip de loopback
 //127.0.0.1 -> localhost
 //localhost:5500
+module.exports = app;
