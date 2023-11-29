@@ -1,7 +1,7 @@
 //ORM:libreria para conexion servidor/db
 //permite interaccion rapida
 const { Sequelize } = require("sequelize");
-const { envs } = require("../envirotment/envirotment.");
+const { envs } = require("../envirotment/envirotment");
 
 const sequelize = new Sequelize(envs.DB_URI, {
   logging: false, //reduce el ruido en la terminal no mostrando las consultas sql

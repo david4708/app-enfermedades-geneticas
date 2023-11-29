@@ -1,7 +1,7 @@
 const app = require("./app");
 const { authenticated, syncUp } = require("./config/database/database");
 
-const { envs } = require("./config/envirotment/envirotment.");
+const { envs } = require("./config/envirotment/envirotment");
 
 async function main() {
   try {
