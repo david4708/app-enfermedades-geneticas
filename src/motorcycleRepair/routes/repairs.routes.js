@@ -15,6 +15,7 @@ router
   .use("/:id", repairMeddleware.existRepair)
   .route("/:id")
   .get(repairController.findRepair)
+
   .patch(repairController.update)
   .delete(repairController.delete);
 

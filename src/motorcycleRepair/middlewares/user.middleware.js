@@ -9,23 +9,30 @@ exports.existUser = async (req, res, next) => {
     },
   });
   if (!user) {
-    //return next(`User with email: ${id} not found`, 404);
-    return next(`User with id not found`, 404);
+    return res.status(500).json({
+      status: "fail",
+      message: `cannot find id:${id} on db`,
+    });
   }
-  (req.user = user), next();
+
+  next();
 };
 
 exports.existUserEmail = async (req, res, next) => {
   const { email } = req.body;
+  req.email = email;
   const user = await User.findOne({
     where: {
-      email: email.toLowerCase(),
+      email: req.email.toLowerCase(),
       status: "available",
     },
   });
-  if (!user) {
-    return next(`User with email: ${email} not found`, 404);
+  if (user) {
+    return res.status(404).json({
+      status: "error",
+      message: `User with email: ${email} already exists`,
+    });
   }
-  req.user = user;
+
   next();
 };

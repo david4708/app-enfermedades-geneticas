@@ -58,7 +58,7 @@ exports.findUser = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "fail",
-      message: "server internal error",
+      message: "server internal error2",
     });
   }
 };
@@ -88,7 +88,7 @@ exports.update = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "fail",
-      message: "server internal error",
+      message: "server internal error4",
     });
   }
 };

@@ -24,3 +24,12 @@ app.use(routes.users, userRouter);
 app.use(routes.repairs, repairRouter);
 
 module.exports = app;
+/* if(err.statusCode){
+  return error.status(400).json({
+    status:"error",
+    message:"err.statusCode"
+  })
+}else{
+  return error.status(500).json({
+    status:"error",
+    message:"err.statusCode" */

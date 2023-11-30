@@ -68,7 +68,7 @@ exports.findRepair = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: "fail",
-      message: "server internal error",
+      message: "server internal error2",
     });
   }
 };
@@ -85,7 +85,7 @@ exports.update = async (req, res) => {
     if (!repairs) {
       return res.status(404).json({
         status: "error",
-        message: `user with id: ${id} not found`,
+        message: `user with id: ${id} cannot be updated`,
       });
     }
     await repairs.update({ status: "completed" });
