@@ -1,35 +1,35 @@
-const express = require("express");
+import express from 'express';
+
+import { router } from './routes/index.js';
+import { envs } from './config/envirotment/envirotment.js';
+import morgan from 'morgan';
+import { AppError } from './common/errors/appError.js';
+import { globalErrorHandler } from './common/errors/errorController.js';
 
 //2. crearnos una constante app que tendra
 //todas las funcionalidades de express
 
-const routes = {
-  users: "/api/v1/users",
-  repairs: "/api/v1/repairs",
-};
 //routes
-const userRouter = require("./motorcycleRepair/routes/user.routes");
-const repairRouter = require("./motorcycleRepair/routes/repairs.routes");
 
 const app = express();
-
-//midleware, para q el backend lea Json en el body
+//middlewares para leer json y url-encode
 app.use(express.json());
-
-//midleware, para q el backend lea url-encoded en el body
-
 app.use(express.urlencoded({ extended: true }));
 
-app.use(routes.users, userRouter);
-app.use(routes.repairs, repairRouter);
+if (envs.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
-module.exports = app;
-/* if(err.statusCode){
-  return error.status(400).json({
-    status:"error",
-    message:"err.statusCode"
-  })
-}else{
-  return error.status(500).json({
-    status:"error",
-    message:"err.statusCode" */
+//rutas
+
+app.use('/api/v1', router);
+
+app.all('*', (req, res, next) => {
+  return next(
+    new AppError(`can't find ${req.originalUrl} on this server`, 404)
+  );
+});
+
+app.use(globalErrorHandler);
+
+export default app;

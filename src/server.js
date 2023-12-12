@@ -1,7 +1,7 @@
-const app = require("./app");
-const { authenticated, syncUp } = require("./config/database/database");
+import app from './app.js';
 
-const { envs } = require("./config/envirotment/envirotment");
+import { authenticated, syncUp } from './config/database/database.js';
+import { envs } from './config/envirotment/envirotment.js';
 
 async function main() {
   try {
@@ -14,5 +14,5 @@ async function main() {
 main();
 
 app.listen(envs.PORT, () => {
-  console.log("Server running on port: " + envs.PORT);
+  console.log('Server running on port: ' + envs.PORT);
 });

@@ -6,35 +6,38 @@
 //es necesario estimar un tiempo de respuesta, por esto se usa el metodo
 // async-away
 
-const RepairModel = require("../models/repair.model");
+//const RepairModel = require("./repair.model");
+import RepairModel from './repair.model.js';
 
 class RepairServices {
-  static async findAll() {
+  static async findAllService() {
     return await RepairModel.findAll({
       where: {
-        status: "pending",
+        status: 'pending',
       },
     });
   }
-  static async create(data) {
+  static async createService(data) {
     return await RepairModel.create(data);
   }
-  static async findOne(id) {
+  static async findOneService(id, status = 'pending') {
     return await RepairModel.findOne({
-      where: { id, status: "pending" },
+      where: {
+        id,
+        status: status,
+      },
     });
   }
 
-  static async update(id) {
-    return await RepairModel.update({
-      where: { id, status: "completed" },
-    });
+  static async updateService(repair) {
+    return await repair.update({ status: 'completed' });
   }
 
-  static async delete(repairs) {
-    return await repairs.update({
-      status: "canceled",
+  static async deleteService(repair) {
+    return await repair.update({
+      status: 'canceled',
     });
   }
 }
-module.exports = RepairServices;
+
+export default RepairServices;
