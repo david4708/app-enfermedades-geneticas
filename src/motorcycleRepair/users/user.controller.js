@@ -1,3 +1,4 @@
+import { where } from 'sequelize';
 import { AppError } from '../../common/errors/appError.js';
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import {
@@ -94,6 +95,7 @@ const findUser = catchAsync(async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res, next) => {
   const { user } = req;
+
   const { hasError, errorMessages, userData } = validatePartialUser(req.body);
 
   if (hasError) {

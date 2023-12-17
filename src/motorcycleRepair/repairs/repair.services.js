@@ -7,14 +7,22 @@
 // async-away
 
 //const RepairModel = require("./repair.model");
+import UserModel from '../users/user.model.js';
 import RepairModel from './repair.model.js';
 
 class RepairServices {
   static async findAllService() {
+    //const user=await UserServices.findOne(data)
     return await RepairModel.findAll({
       where: {
-        status: 'pending',
+        status: ['pending', 'completed'],
+        //   user: user.data,
       },
+      include: [
+        {
+          model: UserModel,
+        },
+      ],
     });
   }
   static async createService(data) {

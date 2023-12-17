@@ -2,6 +2,7 @@
 //controller
 
 import { catchAsync } from '../../common/errors/catchAsync.js';
+
 import { validatePartialRepair, validateRepair } from './repair.schema.js';
 import repairService from './repair.services.js';
 
@@ -25,7 +26,6 @@ const createRepair = catchAsync(async (req, res, next) => {
 
 const findAllRepair = catchAsync(async (req, res) => {
   const repairs = await repairService.findAllService();
-
   return res.status(200).json({
     status: 'success',
     repairs,

@@ -22,6 +22,14 @@ const loginUserSchema = z.object({
     .max(16, { message: 'Password is too long' }),
 });
 
+const updateUserSchema = z.object({
+  email: z.string().email({ message: 'Invalid email' }),
+  name: z
+    .string()
+    .min(3, { message: 'name is too short' })
+    .max(50, { message: 'name is too long' }),
+});
+
 export function validateUser(data) {
   const result = registerSchema.safeParse(data);
 
@@ -38,7 +46,7 @@ export function validateUser(data) {
 }
 
 export function validatePartialUser(data) {
-  const result = registerSchema.partial().safeParse(data);
+  const result = updateUserSchema.safeParse(data);
 
   const {
     hasError,

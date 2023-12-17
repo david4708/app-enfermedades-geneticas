@@ -16,16 +16,11 @@ router.use(protect);
 
 router.patch('/change-password', userController.changePassword);
 
-router.get('/', userController.findAllUsers);
+router.get('/', restrictTo('employee'), userController.findAllUsers);
 
 router
 
   .route('/:id')
-  .get(restrictTo('employee'), validateExistUser, userController.findUser)
+  .get(validateExistUser, protectAccountOwner, userController.findUser)
   .patch(validateExistUser, protectAccountOwner, userController.updateUser)
-  .delete(
-    validateExistUser,
-    restrictTo('employee'),
-    protectAccountOwner,
-    userController.deleteUser
-  );
+  .delete(validateExistUser, protectAccountOwner, userController.deleteUser);
